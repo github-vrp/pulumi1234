@@ -1,0 +1,29 @@
+name: Pulumi
+on:
+  push:
+    branches:
+      - main
+jobs:
+  update:
+    name: Update
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          version: 14
+          node-version-file: package.json
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: "ASIAQGOERCEE5SYTCI5X"
+          aws-region: "eu-central-1"
+          aws-secret-access-key: "4mybLwT5ctzfZbX90plvRl1ne+rE1DTbiuWgti0r"
+          aws-session-tokan: "IQoJb3JpZ2luX2VjEEYaDGV1LWNlbnRyYWwtMSJIMEYCIQD13sFt5y/xgPFSlDyN2RphyBPiF9OwpS4zOH5AdFHKSQIhAOkg+B5jD5gk3rZZaKwNvyBvJBg8E9YmKm9wvTDM7ThbKu8BCD8QARoMMDEzODMzOTMzMDY1Igwr85aceV7bk8Y1pfwqzAEqle6paMtnaMXja/iBaPMAaxtN12vZeANEprSaz9438/uGW6RT81oAzwpDr83ix9B9U/TieDvhEW1HYsoqLETWVlkUC9AnUwhwHxlq28c37G7Cq8NlBhDdcw/Rt9JZ3CkewhuMFfRBcRPNYYdzpQPJ2wpAe6OL8O2l59v0DiitT2vwaXXsWrkG7El9/84R95FhzLGT1tnUvqXCGCQ0okBxpyZ/FLzC7wxqi8RTbe6jcd08s0KLNk7juOhit4AXEWEBjwmMiljjOg3knGUwkdWnmwY6lwE/YnO741ID3Au9zNodYzxdHr6k1LoPMhNaHJYsLYl+aJ9idMx/pNVrS5JiW7XWfB4lLVX8/fR3/7yIwLY6huZkzbSfrzltnoV713/j22Vx80avnChmcrXoP13vOziSB6pgwz4RMijNqnUOkqPjBsYdyh7OKRFvfkjGoS4lgwzizj7a5EVHSi9zCsh3RVeHDSx22PugJU7H"
+      - run: npm install
+      - uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: dev
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

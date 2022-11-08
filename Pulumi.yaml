@@ -1,0 +1,14 @@
+name: puluminewstart
+description: A minimal AWS Pulumi YAML program
+runtime: yaml
+
+config:
+  aws:profile: MFA
+  
+resources:
+    # Create an AWS resource (S3 Bucket902151)
+    my-bucket:
+        type: aws:s3:Bucket
+outputs:
+    # Export the name of the bucket
+    bucketName: ${my-bucket.id}
